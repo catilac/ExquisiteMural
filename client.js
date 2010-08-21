@@ -19,18 +19,6 @@ var connect = function() {
 };
 
 
-// document.getElementById("send").addEventListener("click", function(e) {
-//   if (conn) {
-//     setTimeout(function() {
-//       conn.send("test message");
-//     }, 0);
-//   }
-//   e.preventDefault();
-//   return false;
-// }, false);
-
-// window.onload = connect;
-
 $(document).ready(function() {
 	// on mouse move send out position information.
 	$('#square').mousemove(function(e) {
