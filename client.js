@@ -1,4 +1,4 @@
-var host = "10.0.1.4:8000" // "localhost:8000"
+var host = "localhost:8000" // "localhost:8000"
 
 var conn;
 var connect = function() {
@@ -21,7 +21,7 @@ var connect = function() {
 
 $(document).ready(function() {
 	// on mouse move send out position information.
-	$('#square').mousemove(function(e) {
+	$('#mural').mousemove(function(e) {
 	  if (conn) {
 			conn.send("From: " + e.pageX + ", " + e.pageY);
 	  }
