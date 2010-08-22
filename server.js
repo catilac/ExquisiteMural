@@ -33,19 +33,32 @@ function log(msg) {
 function serveFile(req, res){
 	
 	if(req.url.match(/\.js/)){
-		log("HTTP: inbound request, serving: " + req.url);
-		res.writeHead(200, {'Content-Type': 'text/javascript'});
-		fs.createReadStream( path.normalize(path.join(__dirname, req.url)), {
-      'flags': 'r',
-      'encoding': 'binary',
-      'mode': 0666,
-      'bufferSize': 4 * 1024
-    }).addListener("data", function(chunk) {
-			res.write(chunk, 'binary');
-		}).addListener("close", function() {
-			res.end();
-		});
-	} else if( req.url.indexOf("favicon") > -1 ){
+			log("HTTP: inbound request, serving: " + req.url);
+			res.writeHead(200, {'Content-Type': 'text/javascript'});
+			fs.createReadStream( path.normalize(path.join(__dirname, req.url)), {
+	      'flags': 'r',
+	      'encoding': 'binary',
+	      'mode': 0666,
+	      'bufferSize': 4 * 1024
+	    }).addListener("data", function(chunk) {
+				res.write(chunk, 'binary');
+			}).addListener("close", function() {
+				res.end();
+			});
+		} else if(req.url.match(/\.css/)){
+			log("HTTP: inbound request, serving: " + req.url);
+			res.writeHead(200, {'Content-Type': 'text/css'});
+			fs.createReadStream( path.normalize(path.join(__dirname, req.url)), {
+	      'flags': 'r',
+	      'encoding': 'binary',
+	      'mode': 0666,
+	      'bufferSize': 4 * 1024
+	    }).addListener("data", function(chunk) {
+				res.write(chunk, 'binary');
+			}).addListener("close", function() {
+				res.end();
+			});
+		} else if( req.url.indexOf("favicon") > -1 ){
     log("HTTP: inbound request, served nothing, (favicon)");
     
     res.writeHead(200, {'Content-Type': 'image/x-icon'});

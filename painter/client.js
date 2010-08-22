@@ -17,15 +17,3 @@ var connect = function() {
     };
   }
 };
-
-
-$(document).ready(function() {
-	// on mouse move send out position information.
-	$('#mural').mousemove(function(e) {
-	  if (conn) {
-			conn.send("From: " + e.pageX + ", " + e.pageY);
-	  }
-	});
-	
-	connect();
-})
