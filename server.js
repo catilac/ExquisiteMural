@@ -3,6 +3,7 @@ var fs = require('fs');
 var path = require('path');
 var sys  = require('sys');
 var ws   = require('./lib/ws');
+var json = require('./js/json2');
 
 /*-----------------------------------------------
   logging:
@@ -85,6 +86,13 @@ var httpServer = http.createServer(serveFile);
 
 var server = ws.createServer({ debug: true }, httpServer);
 
+
+function buildMessage(connId, x, y, type, msgType) {
+	return JSON.stringify({id: connId, xPos: x, yPos: y, brushType: type, msgType: msgType});
+}
+
+
+
 server.addListener("listening", function() {
 	log("Listening for connections.");
 })
@@ -92,18 +100,19 @@ server.addListener("listening", function() {
 server.addListener("connection", function(conn){
   log("opened connection: "+conn.id);
   
-  server.send(conn.id, "Connected as: "+conn.id);
-  conn.broadcast("<"+conn.id+"> connected");
+  server.send(conn.id, buildMessage(conn.id));
+  conn.broadcast(buildMessage(conn.id));
   
   conn.addListener("message", function(message){
     log("<"+conn.id+"> "+message);
-    conn.broadcast("<"+conn.id+"> "+message);
+		msg = JSON.parse(message);
+    conn.broadcast(buildMessage(conn.id, msg.xPos, msg.yPos, msg.brushType, msg.msgType));
   });
 });
 
 server.addListener("close", function(conn){
   log("closed connection: "+conn.id);
-  conn.broadcast("<"+conn.id+"> disconnected");
+  conn.broadcast(buildMessage(conn.id));
 });
 
 server.listen(8000);

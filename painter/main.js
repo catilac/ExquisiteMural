@@ -9,6 +9,7 @@ var SCREEN_WIDTH = window.innerWidth,
     COLOR = [0, 0, 0],
     BACKGROUND_COLOR = [250, 250, 250],
     STORAGE = window.localStorage,
+		players = {},
     brush,
     saveTimeOut,
     wacom,
@@ -30,16 +31,30 @@ var SCREEN_WIDTH = window.innerWidth,
     shiftKeyIsDown = false,
     altKeyIsDown = false;
 
+// this needs to be moved into a utility.js or whatever
+function buildMessage(connId, x, y, msgType) {
+	type = BRUSHES[menu.selector.selectedIndex]
+	return JSON.stringify({id: connId, xPos: x, yPos: y, brushType: type, msgType: msgType});
+}
+
+function sendMessage(connId, x, y, msgType) {
+	if(conn){ 
+		conn.send(buildMessage(connId, x, y, msgType));
+	}
+	
+}
+
+
 $(document).ready(function() {
 	// on mouse move send out position information.
 	init();
 	
-	$('body').mousemove(function(e) {
+	$('canvas').mousemove(function(e) {
 	  if (conn) {
-			conn.send("From: " + e.pageX + ", " + e.pageY);
+			conn.send(buildMessage(conn.id, mouseX, mouseY, "move"));
 	  }
 	});
-	
+		
 	connect();
 })
 
@@ -440,6 +455,7 @@ function onCanvasMouseDown( event )
 	BRUSH_PRESSURE = wacom && wacom.isWacom ? wacom.pressure : 1;
 	
 	brush.strokeStart( event.clientX, event.clientY );
+	sendMessage(conn.id, event.clientX, event.clientY, "strokeStart");
 
 	window.addEventListener('mousemove', onCanvasMouseMove, false);
 	window.addEventListener('mouseup', onCanvasMouseUp, false);
@@ -450,11 +466,13 @@ function onCanvasMouseMove( event )
 	BRUSH_PRESSURE = wacom && wacom.isWacom ? wacom.pressure : 1;
 	
 	brush.stroke( event.clientX, event.clientY );
+	sendMessage(conn.id, event.clientX, event.clientY, "strokeMove");
 }
 
 function onCanvasMouseUp()
 {
 	brush.strokeEnd();
+	sendMessage(conn.id, 0, 0, "strokeEnd");
 	
 	window.removeEventListener('mousemove', onCanvasMouseMove, false);
 	window.removeEventListener('mouseup', onCanvasMouseUp, false);

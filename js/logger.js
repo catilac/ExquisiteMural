@@ -26,7 +26,7 @@ var Logger = {
 		if(!this.output_log) {
 			this.output_log = document.getElementById('log')
 		}
-	  this.output_log.innerHTML += this.timestamp()+": "+data+"<br />";
+	  // this.output_log.innerHTML += this.timestamp()+": "+data+"<br />";
 	  // this.scrollToBottom();
 	}
 }
