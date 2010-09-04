@@ -1,6 +1,7 @@
 function circles( context )
 {
 	this.init( context );
+	this.type = 'circles';
 }
 
 circles.prototype =

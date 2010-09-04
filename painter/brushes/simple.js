@@ -1,6 +1,7 @@
 function simple( context )
 {
 	this.init( context );
+	this.type = 'simple'
 }
 
 simple.prototype =

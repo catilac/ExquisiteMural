@@ -1,6 +1,7 @@
 function chrome( context )
 {
 	this.init( context );
+	this.type = 'chrome';
 }
 
 chrome.prototype =

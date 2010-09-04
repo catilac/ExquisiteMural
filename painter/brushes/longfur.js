@@ -1,6 +1,7 @@
 function longfur( context )
 {
 	this.init( context );
+	this.type = 'longfur';
 }
 
 longfur.prototype =

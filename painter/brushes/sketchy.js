@@ -1,6 +1,7 @@
 function sketchy( context )
 {
 	this.init( context );
+	this.type = 'sketchy'
 }
 
 sketchy.prototype =

@@ -13,7 +13,6 @@ function createBrush(player, brushType) {
 
 function handleMessage(player, data) {
 	player.update(data.xPos, data.yPos, data.brushType);
-	if (!player.brush) {createBrush(player, player.type);}
 	
 	if (data.msgType == "strokeStart") {
 		player.brush.strokeStart( player.mouseX, player.mouseY );

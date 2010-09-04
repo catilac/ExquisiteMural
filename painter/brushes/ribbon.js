@@ -1,6 +1,7 @@
 function ribbon( context )
 {
 	this.init( context );
+	this.type = 'ribbon';
 }
 
 ribbon.prototype =

@@ -1,6 +1,7 @@
 function squares( context )
 {
 	this.init( context );
+	this.type = 'squares';
 }
 
 squares.prototype =

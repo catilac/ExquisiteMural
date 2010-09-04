@@ -18,11 +18,17 @@ player.prototype = {
 		this.type = brushType;
 		this.mouseX = posX;
 		this.mouseY = posY;
-		
+		this.createBrush();
 	},
 	
 	draw: function () {
 		this.context.strokeRect(this.mouseX, this.mouseY, 3, 3);
+	},
+	
+	createBrush: function () { 
+		if(!this.brush || (this.type != this.brush.type)) {
+			this.brush = eval("new " + this.type + "(this.context)");
+		}
 	}
 	
 }

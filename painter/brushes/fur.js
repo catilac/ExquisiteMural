@@ -1,6 +1,7 @@
 function fur( context )
 {
 	this.init( context );
+	this.type = 'fur';
 }
 
 fur.prototype =

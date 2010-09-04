@@ -1,6 +1,7 @@
 function web( context )
 {
 	this.init( context );
+	this.type = 'web';
 }
 
 web.prototype =

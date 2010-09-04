@@ -1,6 +1,7 @@
 function shaded( context )
 {
 	this.init( context );
+	this.type = 'shaded';
 }
 
 shaded.prototype =

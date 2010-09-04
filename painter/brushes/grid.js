@@ -1,6 +1,7 @@
 function grid( context )
 {
 	this.init( context );
+	this.type = 'grid';
 }
 
 grid.prototype =
